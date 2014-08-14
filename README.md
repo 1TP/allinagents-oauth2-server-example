@@ -8,6 +8,7 @@ a sample oauth2 server written in php
 First, it is important that you understand the basics of oauth. Some good reading:
 
 http://oauth2.thephpleague.com/
+
 http://oauth.net/
 
 This demo uses the Client Credentials Grant Type where the client uses their credentials to retrieve an access token directly, which allows access to resources under the client's control. This demo app will also act as two different services:
