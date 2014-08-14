@@ -11,7 +11,11 @@ http://oauth2.thephpleague.com/
 
 http://oauth.net/
 
-This demo uses the Client Credentials Grant Type where the client uses their credentials to retrieve an access token directly, which allows access to resources under the client's control. This demo app will also act as two different services:
+This demo uses the Client Credentials Grant Type:
+
+http://tools.ietf.org/html/rfc6749#section-4.4
+
+With this grant type, the client uses their credentials to retrieve an access token directly, which then allows access to resources under the client's control. This demo app will also act as two different services:
 
 1. An Authentication Server - A server which issues access tokens after successfully authenticating a client and resource owner, and authorizing the request.
 
