@@ -63,7 +63,7 @@ Example return value:
 
 ----------
 
-GENERATE TEMPORARY TOKEN:
+4: GENERATE TEMPORARY TOKEN:
 
 Use the refresh token from step 1 to generate a new temporary token/
 curl -u testclient:testpass http://localhost/my-oauth2-walkthrough/token.php -d 'grant_type=refresh_token&refresh_token=refresh_token_from_step_1&scope=temporary'
@@ -72,7 +72,7 @@ This creates a new access token with a much more short lived expiration. This ne
 
 ----------
 
-RETRIEVE RESOURCE:
+5: RETRIEVE RESOURCE:
 
 curl http://localhost/my-oauth2-walkthrough/resource.php -d 'access_token=access_token_from_step_2'
 
