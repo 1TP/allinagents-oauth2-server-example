@@ -33,7 +33,7 @@ And
 
 ## USAGE
 
-CREATE AN OAUTH USER:
+1: CREATE AN OAUTH USER:
 
 INSERT INTO oauth_users (username, password, first_name, last_name) VALUES ("username", SHA1("password"), "firstname", "lastname")
 
@@ -41,7 +41,7 @@ note: This could be seperate from your applications users. In this case, if one 
 
 ----------
 
-CREATE A CLIENT:
+2: CREATE A CLIENT:
 
 INSERT INTO oauth_clients (client_id, client_secret, redirect_uri) VALUES ("testclient", "testpass", "http://fake/");
 
@@ -49,7 +49,7 @@ note: again, a client represents an external application that will be accessing 
 
 ----------
 
-CREATE A PERMANENT USER TOKEN:
+3: CREATE A PERMANENT USER TOKEN:
 
 curl -u testclient:testpass http://localhost/my-oauth2-walkthrough/token.php -d 'grant_type=password&username=username&password=password&scope=permanent%20temporary'
 
