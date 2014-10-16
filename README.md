@@ -33,7 +33,7 @@ And
 
 ## USAGE
 
-1. CREATE AN OAUTH USER:
+CREATE AN OAUTH USER:
 
 INSERT INTO oauth_users (username, password, first_name, last_name) VALUES ("username", SHA1("password"), "firstname", "lastname")
 
@@ -41,7 +41,7 @@ note: This could be seperate from your applications users. In this case, if one 
 
 ----------
 
-2. CREATE A CLIENT:
+CREATE A CLIENT:
 
 INSERT INTO oauth_clients (client_id, client_secret, redirect_uri) VALUES ("testclient", "testpass", "http://fake/");
 
@@ -49,7 +49,7 @@ note: again, a client represents an external application that will be accessing 
 
 ----------
 
-3. CREATE A PERMANENT USER TOKEN:
+CREATE A PERMANENT USER TOKEN:
 
 curl -u testclient:testpass http://localhost/my-oauth2-walkthrough/token.php -d 'grant_type=password&username=username&password=password&scope=permanent%20temporary'
 
@@ -63,7 +63,8 @@ Example return value:
 
 ----------
 
-3: GENERATE TEMPORARY TOKEN:
+GENERATE TEMPORARY TOKEN:
+
 Use the refresh token from step 1 to generate a new temporary token/
 curl -u testclient:testpass http://localhost/my-oauth2-walkthrough/token.php -d 'grant_type=refresh_token&refresh_token=refresh_token_from_step_1&scope=temporary'
 
@@ -71,7 +72,7 @@ This creates a new access token with a much more short lived expiration. This ne
 
 ----------
 
-4. RETRIEVE RESOURCE:
+RETRIEVE RESOURCE:
 
 curl http://localhost/my-oauth2-walkthrough/resource.php -d 'access_token=access_token_from_step_2'
 
