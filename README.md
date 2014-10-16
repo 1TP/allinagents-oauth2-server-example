@@ -61,14 +61,17 @@ This step creates non expiriring (or at least VERY long lived) access and refres
 Example return value:
 {"access_token":"e779cd50a10aee3dc070359ecef3630d462a4b4a","expires_in":732460774,"token_type":"Bearer","scope":"permanent temporary","refresh_token":"0f6ec51f66f5448c5eba9dfbb0934bbff624d60b"}
 
-2: GENERATE TEMPORARY TOKEN:
+----------
+
+3: GENERATE TEMPORARY TOKEN:
 Use the refresh token from step 1 to generate a new temporary token/
 curl -u testclient:testpass http://localhost/my-oauth2-walkthrough/token.php -d 'grant_type=refresh_token&refresh_token=refresh_token_from_step_1&scope=temporary'
 
 This creates a new access token with a much more short lived expiration. This new token should also take on the attributes (user_id, client_id, etc) of the original token created in step 1. This does NOT create a new refresh token. Since the refresh token from step 1 is considered permanent, we can continue to use that in oder to regenerate new short lived auth tokens.
 
+----------
 
-3. RETRIEVE RESOURCE:
+4. RETRIEVE RESOURCE:
 
 curl http://localhost/my-oauth2-walkthrough/resource.php -d 'access_token=access_token_from_step_2'
 
