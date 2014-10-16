@@ -49,7 +49,14 @@ note: again, a client represents an external application that will be accessing 
 
 ----------
 
-3: CREATE A PERMANENT USER TOKEN:
+3: CREATE SCOPES:
+
+INSERT INTO `oauth_scopes` (scope) VALUES ('permanent');
+INSERT INTO `oauth_scopes` (scope) VALUES ('temporary');
+
+----------
+
+4: CREATE A PERMANENT USER TOKEN:
 
 curl -u testclient:testpass http://localhost/my-oauth2-walkthrough/token.php -d 'grant_type=password&username=username&password=password&scope=permanent%20temporary'
 
@@ -63,7 +70,7 @@ Example return value:
 
 ----------
 
-4: GENERATE TEMPORARY TOKEN:
+5: GENERATE TEMPORARY TOKEN:
 
 Use the refresh token from step 1 to generate a new temporary token/
 curl -u testclient:testpass http://localhost/my-oauth2-walkthrough/token.php -d 'grant_type=refresh_token&refresh_token=refresh_token_from_step_1&scope=temporary'
@@ -72,7 +79,7 @@ This creates a new access token with a much more short lived expiration. This ne
 
 ----------
 
-5: RETRIEVE RESOURCE:
+6: RETRIEVE RESOURCE:
 
 curl http://localhost/my-oauth2-walkthrough/resource.php -d 'access_token=access_token_from_step_2'
 
