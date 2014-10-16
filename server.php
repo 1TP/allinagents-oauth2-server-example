@@ -11,14 +11,38 @@ ini_set('display_errors',1);error_reporting(E_ALL);
 require_once('oauth2-server-php/src/OAuth2/Autoloader.php');
 OAuth2\Autoloader::register();
 
-// $dsn is the Data Source Name for your database, for exmaple "mysql:dbname=my_oauth2_db;host=localhost"
+// $dsn is the Data Source Name for your database, for example"mysql:dbname=my_oauth2_db;host=localhost"
 $storage = new OAuth2\Storage\Pdo(array('dsn' => $dsn, 'username' => $username, 'password' => $password));
 
-// Pass a storage object or array of storage objects to the OAuth2 server class
-$server = new OAuth2\Server($storage);
+// set default expiration date
+$expirationDefault = 60;
 
-// Add the "Client Credentials" grant type (it is the simplest of the grant types)
+// set maximum expiration date based on mysql timestamp max range
+$expirationMax = strtotime('2038-01-01 00:00:00') - strtotime("now");
+
+// set the expiration / access lifetime based on grant type request
+$accessLifetime = $expirationMax;
+if(isset($_REQUEST['grant_type'])){
+	switch ($_REQUEST['grant_type']) {
+		case 'password':
+			$accessLifetime = $expirationMax;
+			break;
+		case 'refresh_token':
+			$accessLifetime = $expirationDefault;
+			break;
+	}
+}
+
+// Pass a storage object or array of storage objects to the OAuth2 server class
+$server = new OAuth2\Server($storage, array(
+	'access_lifetime' => $accessLifetime,
+	'refresh_token_lifetime' => $expirationMax
+));
+
+// Add the "Client Credentials" grant type
 $server->addGrantType(new OAuth2\GrantType\UserCredentials($storage));
 
-// Add the "Authorization Code" grant type (this is where the oauth magic happens)
-$server->addGrantType(new OAuth2\GrantType\AuthorizationCode($storage));
+// Add the "Refresh Token" grant type
+$server->addGrantType(new OAuth2\GrantType\RefreshToken($storage, array(
+    'always_issue_new_refresh_token' => false
+)));
